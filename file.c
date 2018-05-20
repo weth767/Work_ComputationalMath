@@ -24,23 +24,23 @@ values read_file(char readfile[]){
                     fscanf(file,"%i",&v.n);//lê o valor inteiro de n
                 break;
                 case 'x'://Lista com n valores de x da tabela
-                    v.x = (float*)malloc(v.n * sizeof(float));//aloca espaço para o vetor de pontos de x
+                    v.x = (double*)malloc(v.n * sizeof(double));//aloca espaço para o vetor de pontos de x
                     getc(file);//como o caractere x já foi lido, pula a o espaço
                     //e começa a leitura dos valores de x
                     for(int i = 0; i < v.n; i++){
-                        fscanf(file,"%f",&v.x[i]);//pega o valor float
-                        getc(file);//pula o espaço e vai para o próximo float
+                        fscanf(file,"%lf",&v.x[i]);//pega o valor double
+                        getc(file);//pula o espaço e vai para o próximo double
                     }
                     /*sai do laço nessa repetição para pegar o valor de y na proxima*/
                     continue;
                 break;
                 case 'y'://Lista com n valores de y da tabela
-                    v.y = (float*)malloc(v.n * sizeof(float));//aloca espaço para o vetor de pontos de y
+                    v.y = (double*)malloc(v.n * sizeof(double));//aloca espaço para o vetor de pontos de y
                     getc(file);//como o caractere y já foi lido, pula a o espaço
                     //e começa a leitura dos valores de y
                     for(int i = 0; i < v.n; i++){
-                        fscanf(file,"%f",&v.y[i]);//pega o valor float
-                        getc(file);//pula o espaço e vai para o próximo float
+                        fscanf(file,"%lf",&v.y[i]);//pega o valor double
+                        getc(file);//pula o espaço e vai para o próximo double
                     }
                 break;
                 case 'a'://Limite inferior do intervalo para o cálculo da integral definida
@@ -56,12 +56,12 @@ values read_file(char readfile[]){
                     fscanf(file,"%i",&v.i);//pega o valor inteiro de i
                 break;
                 case 'p'://Lista com i pontos a interpolar
-                    v.p = (float*)malloc(v.i * sizeof(float));
+                    v.p = (double*)malloc(v.i * sizeof(double));
                     getc(file);//como o caractere p já foi lido, pula a o espaço
                     //e começa a leitura dos valores de p
                     for(int i = 0; i < v.i; i++){
-                        fscanf(file,"%f",&v.p[i]);//pega o valor float
-                        getc(file);//pula o espaço e vai para o próximo float
+                        fscanf(file,"%lf",&v.p[i]);//pega o valor double
+                        getc(file);//pula o espaço e vai para o próximo double
                     }
                 break;
                 case 't'://Números de trapézios a implementar
