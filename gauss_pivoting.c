@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+/*função para mostrar os valores na matriz*/
 void show_matrix(double** matrix,int size){
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
@@ -10,6 +10,13 @@ void show_matrix(double** matrix,int size){
         printf("\n");
     }
     printf("\n\n");
+}
+/*função para mostrar os valores do vetor*/
+void show_vector(double*vector,int size){
+    for(int i = 0; i < size; i++){
+        printf("%lf ",vector[i]);
+    }
+    printf("\n");
 }
 /*função para realizar a troca de linhas da matriz*/
 /*recebe os ponteiros dos vetores,ou linhas da matriz a serem trocados*/
@@ -45,12 +52,14 @@ void switch_independent_terms(double *term_one,double*term_two){
 entretanto, um forma mais aprimorada do método que consiste em pivotear linhas para um melhor desempenho
 do método*/
 double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
-    show_matrix(matrix,size);
     /*aloca espaço de memória para o vetor de x'termos*/
     /*que será devolvido no final da função*/
     double multiplier;
-    double y[size];
     double* x = (double*)malloc(size*sizeof(double));
+    /*preenche o vetor x com zeros*/
+    for(int i = 0; i < size; i++){
+        x[i] = 0;
+    }
     /*variavel index, que guardará o indice de troca caso seja necessária a troca*/
     int index;
     /*laço de repetição externo, que caminha entre as colunas da matriz*/
@@ -61,7 +70,7 @@ double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
         for(int switch_line = pivo + 1; switch_line < size; switch_line++){
             /*verifica todas as posições abaixo da pivo na mesma coluna*/
             /*procurando um elemento maior, se encontrar*/
-            if(matrix[switch_line][pivo] > matrix[pivo][pivo]){
+            if(abs(matrix[switch_line][pivo]) > abs(matrix[pivo][pivo])){
                 /*guarda seu index*/
                 index = switch_line;
             }
@@ -86,20 +95,18 @@ double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
             }
             /*o vetor de termos independentes também será multiplicado e somado*/
             vector[j] = vector[j] - (multiplier * vector[pivo]);
-        }   
+        }  
     }
-    show_matrix(matrix,size);
-    exit(1);
     /*começa agora a substituição retroativa*/
-    x[(size - 1)] = vector[(size - 1)]/matrix[(size - 1)][(size - 1)];
+    x[size - 1] = vector[size - 1]/matrix[size - 1][size - 1];
     /*variavel soma, que será util para realizar a substituação*/
     double sum;
     /*for externo para caminhar nas linhas da matriz*/
-    for(int i = (size - 1) - 1; i >= 1; i--){
+    for(int i = (size - 1) - 1; i >= 0; i--){
         /*zera a soma*/
         sum = 0;
         /*for interno para caminhar nas colunas da matriz*/
-        for(int j = (i + 1); i < size; j++){
+        for(int j = i + 1; j < size; j++){
             /*realiza o soma do valor*/
             sum = sum + matrix[i][j] * x[j];
         }
