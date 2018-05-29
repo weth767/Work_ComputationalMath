@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <string.h>
 /*função para criar a matrix, recebe o tamanho da matriz por parâmetro*/
 double** create_matrix(int size){
     /*aloca dinamicamente espaço para a matriz*/
@@ -57,10 +58,10 @@ int main(int argc, char *argv[]){
     vet[1] = 25;
     vet[2] = 18;
     vet[3] = 72;
-    /******************************************/
-
+    /******************************************/      
     /*strings para os caminhos de dados*/
     /*uma para o arquivo de entrada e outra para o arquivo de saida em r*/
+    char string[100];
     char path_input_file[100];
     char path_output_file[100];
     /*inicia as strings com espaço em branco para futura verificação*/
@@ -68,7 +69,7 @@ int main(int argc, char *argv[]){
     strcpy(path_output_file," "); 
     /*salva esses caminhos nas strings*/
     /*verifica se os caminhos foram preenchidos, se sim permite a execução do código*/
-    if(argv[1] != NULL && argv[2] != NULL){ 
+    if(argv[1] != NULL && argv[2] != NULL && argc == 3){ 
         strcpy(path_input_file,argv[1]);
         strcpy(path_output_file,argv[2]);
         /*recebe os valores lidos do arquivo*/
@@ -107,6 +108,13 @@ int main(int argc, char *argv[]){
         /*v.n - 1 é o expoente maior da função*/
         double area = trapezium_rule(v.a,v.b,v.t,x,v.n);
         data_out(path_output_file,v,x,y,area);
+        /*executa o comando em R, para rodar o arquivo*/
+        strcpy(string,"Rscript ");
+        strcat(string,path_output_file);
+        printf("%s\n",string);
+        system(string);
+        /*abrindo a imagem*/
+        system("display saida.png");
     }
     else{
         printf("Formato errado de iniciação do software, são necessários os nomes/caminhos dos arquivos de entrada e saida!\n");

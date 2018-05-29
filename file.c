@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "file.h"
+#include <stdbool.h>
+
 
 /*Função para ler o arquivo passado por parâmetro e devolve os dados para ser usados no arquivo
  principal do software 
@@ -10,6 +12,10 @@ values read_file(char readfile[]){
     char character;
     char helper[50];
     values v;
+    for(int i = 0; i < 8; i++){
+        /*inicia o vetor de verificação com false*/
+        v.verify[i] = false;
+    }
     /*abre o arquivo para a leitura*/
     FILE* file = fopen(readfile,"r");
     /*verifica se o ponteiro não está nulo, ou seja conseguiu abrir o arquivo*/
@@ -22,6 +28,7 @@ values read_file(char readfile[]){
                 case 'n'://Número de pontos da tabela
                     getc(file);//pula o espaço após o  caractere lido
                     fscanf(file,"%i",&v.n);//lê o valor inteiro de n
+                    v.verify[0] = true;
                 break;
                 case 'x'://Lista com n valores de x da tabela
                     v.x = (double*)malloc(v.n * sizeof(double));//aloca espaço para o vetor de pontos de x
@@ -31,6 +38,7 @@ values read_file(char readfile[]){
                         fscanf(file,"%lf",&v.x[i]);//pega o valor double
                         getc(file);//pula o espaço e vai para o próximo double
                     }
+                    v.verify[1] = true;
                     /*sai do laço nessa repetição para pegar o valor de y na proxima*/
                     continue;
                 break;
@@ -42,18 +50,22 @@ values read_file(char readfile[]){
                         fscanf(file,"%lf",&v.y[i]);//pega o valor double
                         getc(file);//pula o espaço e vai para o próximo double
                     }
+                    v.verify[2] = true;
                 break;
                 case 'a'://Limite inferior do intervalo para o cálculo da integral definida
                     getc(file);//pula o espaço após o caractere lido
                     fscanf(file,"%lf",&v.a);//pega o valor inteiro de a
+                    v.verify[3] = true;
                 break;
                 case 'b'://Limite superior do intervalor para o cálculo da integral definida
                     getc(file);//pula o espaço após o caractere lido
                     fscanf(file,"%lf",&v.b);//pega o valor inteiro de b
+                    v.verify[4] = true;
                 break;
                 case 'i'://Número de pontos em min(x) e max(x) a ser interpolado
                     getc(file);//pula o espaço após o caractere lido
                     fscanf(file,"%i",&v.i);//pega o valor inteiro de i
+                    v.verify[5] = true;
                 break;
                 case 'p'://Lista com i pontos a interpolar
                     v.p = (double*)malloc(v.i * sizeof(double));
@@ -63,10 +75,12 @@ values read_file(char readfile[]){
                         fscanf(file,"%lf",&v.p[i]);//pega o valor double
                         getc(file);//pula o espaço e vai para o próximo double
                     }
+                    v.verify[6] = true;
                 break;
                 case 't'://Números de trapézios a implementar
                     getc(file);//pula o espaço após o caractere lido
                     fscanf(file,"%i",&v.t);//pega o valor inteiro de t
+                    v.verify[7] = true;
                 break;
                 case '#':
                 break;
@@ -80,14 +94,27 @@ values read_file(char readfile[]){
             fscanf(file,"%[^\n]s",helper);//vai pro final da linha
             getc(file);//e pula para a próxima linha
         }
+        /*verifica o formato do arquivo, se tem todos os valores*/
+        for(int i = 0; i < 8; i++){
+            if(v.verify[i] != true){
+                printf("Formato do arquivo não corresponde ao formato permitido, abortando leitura!\n");
+                exit(1);
+            }
+        }
     }
     /*retorna a estrutura com os valores preenchidos pelos dados do arquivo*/
     return(v);
 }
-
-void data_out(char path_out[100],values v,double *x,double *y,double area){
+/*função para montar o arquivo de saida em R, recebe por paramêtro o 
+caminho de saída, a struct de valores lidos, o vetor resultante da eliminação de 
+gauss, as imagens da função interpolada e a área dos trapézios, que é a integral
+da função*/
+void data_out(char path_out[],values v,double *x,double *y,double area){
+    /*abre o arquivo com escrita*/
     FILE *file = fopen(path_out,"w");
+    /*verifica a nulidade do ponteiro de abertura*/
     if(file != NULL){
+        /*senão está nulo, começa a montar o arquivo .R*/
         fprintf(file,"######################################################################\n");
         fprintf(file,"#Script automatico gerado por ‘trapezium’, software de interpolação #\n");
         fprintf(file,"#e integracao numérica                                              #\n");
@@ -199,5 +226,6 @@ void data_out(char path_out[100],values v,double *x,double *y,double area){
         fprintf(file,"# Encerra a criação do arquivo .png\n");
         fprintf(file,"dev.off();");
     }
+    /*no fim fecha o arquivo*/
     fclose(file);
 }
