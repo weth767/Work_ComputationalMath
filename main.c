@@ -116,6 +116,7 @@ int main(int argc, char *argv[]){
         /*abrindo a imagem*/
         system("display saida.png");
     }
+    /*erro no formato de iniciação do software*/
     else{
         printf("Formato errado de iniciação do software, são necessários os nomes/caminhos dos arquivos de entrada e saida!\n");
     }

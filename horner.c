@@ -9,9 +9,9 @@ double polynomial_horner(double*coefficients, int bigger_expoent, double x){
 	/*variavel y que receberá o valor final da imagem do polinomio segundo o x substituido*/
 	double y = 0;
 	/*recebe o primeiro coefiente*/
-	y = coefficients[0];
+	y = coefficients[bigger_expoent - 1];
 	/*laço de repetição que executa até o valor do maior expoente*/
-	for(int i = 1; i < bigger_expoent; i++){
+	for(int i = bigger_expoent - 2 ; i >= 0; i--){
 		/*o valor de y, será atualizado com os valores dos coeficientes multiplicado por x*/
 		y = y * x + coefficients[i];
 	}
