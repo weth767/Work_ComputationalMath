@@ -62,40 +62,43 @@ double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
     }
     /*variavel index, que guardará o indice de troca caso seja necessária a troca*/
     int index;
+    double bigger;
     /*laço de repetição externo, que caminha entre as colunas da matriz*/
-    for(int pivo = 0; pivo < (size - 1); pivo++){
+    for(int pivot = 0; pivot < (size - 1); pivot++){
         /*zera o index a cada iteração do laço externo para controle de troca*/
-        index = 0;
+        index = pivot;
+        bigger = matrix[pivot][pivot];
         /*laço de repetição interno para as linhas da matriz*/
-        for(int switch_line = pivo + 1; switch_line < size; switch_line++){
+        for(int switch_line = pivot + 1; switch_line < size; switch_line++){
             /*verifica todas as posições abaixo da pivo na mesma coluna*/
             /*procurando um elemento maior, se encontrar*/
-            if(abs(matrix[switch_line][pivo]) > abs(matrix[pivo][pivo])){
+            if(fabs(matrix[switch_line][pivot]) > fabs(bigger)){
                 /*guarda seu index*/
                 index = switch_line;
+                bigger = matrix[switch_line][pivot];
             }
         }
         /*e depois se for necessária a troca*/
-        if(index != 0){
+        if(index != pivot){
             /*chama as funções de trocar linhas da matriz*/
-            switch_lines(&matrix[pivo][pivo],&matrix[index][pivo],size);
+            switch_lines(matrix[pivot],matrix[index],size);
             /*e de trocar posições do vetor de termos independentes*/
-            switch_independent_terms(&vector[pivo],&vector[index]);
+            switch_independent_terms(&vector[pivot],&vector[index]);
         }
         /*depois de verifica a necessidade de troca, começa a realmente fazer as operações na matriz*/
         /*laço de repetição agora para encontrar os multiplicadores*/
-        for(int j = pivo + 1; j < size; j++){
+        for(int j = pivot + 1; j < size; j++){
             /*o multiplicador é a divisão do elemento a ser zerado pela linha pivo*/
-            multiplier = matrix[j][pivo]/matrix[pivo][pivo];
+            multiplier = matrix[j][pivot]/matrix[pivot][pivot];
             /*o outro laço mais interno serve para realizar as operações com o multiplicador encontrado*/
             for(int k = 0; k < size; k++){
                 /*depois faz multiplicação do elemento da linha pivo com o multiplicador e soma
                 com o a linha a ser zerada*/
-                matrix[j][k] = matrix[j][k] - (multiplier * matrix[pivo][k]);
+                matrix[j][k] = matrix[j][k] - (multiplier * matrix[pivot][k]);
             }
             /*o vetor de termos independentes também será multiplicado e somado*/
-            vector[j] = vector[j] - (multiplier * vector[pivo]);
-        }  
+            vector[j] = vector[j] - (multiplier * vector[pivot]);
+        } 
     }
     /*começa agora a substituição retroativa*/
     x[size - 1] = vector[size - 1]/matrix[size - 1][size - 1];
@@ -111,7 +114,7 @@ double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
             sum = sum + matrix[i][j] * x[j];
         }
         /*acrescenta no vetor*/
-        x[i] = (vector[i] - sum)/matrix[i][i];
+        x[i] = (vector[i] - sum)/matrix[i][i]; 
     }
     /*no final retorna o vetor com os valores*/
     return(x);

@@ -1,5 +1,8 @@
 #ifndef GAUSS_PIVOTING_H
 #define GAUSS_PIVOTING_H
+/*função para mostrar os valores do vetor*/
+void show_vector(double*vector,int size);
+/*função para mostrar os valores na matriz*/
 void show_matrix(double** matrix,int size);
 /*função para realizar a troca de linhas da matriz*/
 /*recebe os ponteiros dos vetores,ou linhas da matriz a serem trocados*/
