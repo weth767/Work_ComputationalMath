@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+/*funções relacionadas a matriz e o vetor de termos independentes, necessários para a resolução 
+do sistema linear, pelo método de eliminação de gauss, implementando a outra parte do requisito 4 - Determinação 
+do Polinômio Interpolador e requisito 5, Resolver U x = d por Gauss Pivotal */
 /*função para mostrar os valores na matriz*/
 void show_matrix(double** matrix,int size){
     for(int i = 0; i < size; i++){
@@ -51,6 +54,8 @@ void switch_independent_terms(double *term_one,double*term_two){
 /*função para realizar o método de resolução de sistemas lineares, chamada eliminação de gauss,
 entretanto, um forma mais aprimorada do método que consiste em pivotear linhas para um melhor desempenho
 do método*/
+/*recebe o ponteiro da matriz, do vetor de termos independentes e o tamanho único, já
+que são esperadas matrizes quadradas na função*/
 double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
     /*aloca espaço de memória para o vetor de x'termos*/
     /*que será devolvido no final da função*/
@@ -116,6 +121,6 @@ double* gauss_pivoting_elimation(double**matrix,double*vector,int size){
         /*acrescenta no vetor*/
         x[i] = (vector[i] - sum)/matrix[i][i]; 
     }
-    /*no final retorna o vetor com os valores*/
+    /*no final espera-se retornar um vetor com os valores que resolvem o sistema linear*/
     return(x);
 }

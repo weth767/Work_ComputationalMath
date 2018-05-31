@@ -1,8 +1,8 @@
-main: main.o	file.o	gauss_pivoting.o	horner.o	interpolation.o	trapezium_rule.o
-	gcc main.o	file.o	gauss_pivoting.o	horner.o	interpolation.o	trapezium_rule.o	-lm -o exe
+main: trapezium.o	file.o	gauss_pivoting.o	horner.o	interpolation.o	trapezium_rule.o
+	gcc trapezium.o	file.o	gauss_pivoting.o	horner.o	interpolation.o	trapezium_rule.o	-lm -o trapezium.exe
 	rm *.o
-main.o:	main.c
-	gcc -c main.c
+trapezium.o:	trapezium.c
+	gcc -c trapezium.c
 file.o:	file.h	file.c
 	gcc	-c	file.c
 gauss_pivoting.o:	gauss_pivoting.h	gauss_pivoting.c
