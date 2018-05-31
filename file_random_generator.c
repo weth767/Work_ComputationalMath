@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
             double a = 0;
             double b = 0;
             /*quantidade de pontos a serem interpolados*/
-            int amount_interpolation_points = rand() % 10 + 1;
+            int amount_interpolation_points = rand() % 6 + 1;
             /*vetor de pontos a serem interpolados*/
             double interpolation_points[amount_interpolation_points];
             /*variavel int com a quantidade de trapezios*/
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
             /*pontos de x*/
             while(counter != amount_tab_points){
                 /*gera o número pseudo aleatório*/
-                value = (double)(rand() % 1000) / (rand() % 100 + 1) * (rand() % 2 - rand() % 2);
+                value = (double)(rand() % 10) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
                 if(value != 0){
                     /*verifica se é diferente de 0, se for*/
                     /*salva no vetor e incrementa o contador*/
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
             counter = 0;
             while(counter != amount_tab_points){
                 /*gera o número pseudo aleatório*/
-                value = (double)(rand() % 1000) / (rand() % 100 + 1) * (rand() % 2 - rand() % 2);
+                value = (double)(rand() % 10) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
                 if(value != 0){
                     /*verifica se é diferente de 0, se for*/
                     /*salva no vetor e incrementa o contador*/
@@ -93,8 +93,8 @@ int main(int argc, char *argv[]){
             /*gera os valores dos intervalos de integração*/
             while(a == 0 || b == 0 || a == b) {
                 /*enquanto foram iguais ou algum deles igual a 0, continuam gerando novos valores*/
-                a = (double)(rand() % 100 + 1) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
-                b = (double)(rand() % 100 + 1) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
+                a = (double)(rand() % 10 + 1) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
+                b = (double)(rand() % 10 + 1) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
             }
             /*verifica se o a é maior que o b*/
             if(a > b){
@@ -104,10 +104,11 @@ int main(int argc, char *argv[]){
                 b = temp;
             }
             /*zera novamente o contador*/
+            /*preenche os pontos de interpolação*/
             counter = 0;
             while(counter != amount_interpolation_points){
                 /*gera o número pseudo aleatório*/
-                value = (double)(rand() % 1000) / (rand() % 100 + 1) * (rand() % 2 - rand() % 2);
+                value = (double)(rand() % 10) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
                 if(value != 0){
                     /*verifica se é diferente de 0, se for*/
                     /*salva no vetor e incrementa o contador*/

@@ -1,0 +1,12 @@
+#Lista de pontos tabelados [-1.750000,7.000000]
+n 4
+x -1.750000 0.888889 3.000000 7.000000
+y -1.000000 -0.666667 -0.166667 0.857143
+# Intervalo da integral definida em [-0.125000,0.571429]
+a -0.125000
+b 0.571429
+# Lista de pontos a interpolar
+i 3
+p 1.125000 1.400000 5.000000
+# Computar integral com 32 trapezios
+t 32
