@@ -7,6 +7,6 @@ a -0.800000
 b 0.333333
 # Lista de pontos a interpolar
 i 1
-p -0.800000
+p -0.900000
 # Computar integral com 71 trapezios
 t 71
