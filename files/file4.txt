@@ -1,12 +1,13 @@
-#Lista de pontos tabelados [-7.000000,8.000000]
-n 4
-x -7.000000 -0.222222 -0.142857 8.000000
-y -2.000000 -2.000000 -0.444444 1.142857
-# Intervalo da integral definida em [-0.800000,0.333333]
-a -0.800000
-b 0.333333
+#Lista de pontos tabelados [-6.000000,2.333333]
+n 2
+# Função original: 10*x^1 + 5
+x -6.000000 2.333333
+y -55.000000 28.333333
+# Intervalo da integral definida em [-1.000000,1.500000]
+a -1.000000
+b 1.500000
 # Lista de pontos a interpolar
-i 1
-p -0.900000
-# Computar integral com 71 trapezios
-t 71
+i 3
+p -1.000000 -0.400000 1.000000
+# Computar integral com 6 trapezios
+t 6

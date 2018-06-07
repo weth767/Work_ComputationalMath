@@ -11,15 +11,15 @@
 nome <- 'saida.png'
 
 #Dados tabelados
-x.tab <- c(-1.250000,-0.888889,0.600000,1.200000);
-y.tab <- c(0.500000,0.600000,1.125000,2.250000);
+x.tab <- c(-4.500000,-1.800000,1.000000,1.500000);
+y.tab <- c(1400.687500,4.504000,25.000000,67.187500);
 
 #Pontos interpolados, calculados pelo 'trapezium'
-x.int <- c(-1.052632,0.866667);
-y.int <- c(0.568329,1.516404);
+x.int <- c(-1.000000,0.250000);
+y.int <- c(-75.000000,-39.453125);
 
 # Coeficientes do polinomio interpolador
-coef <- c(0.704432,0.316076,0.472989,0.280771);
+coef <- c(-56.750000,62.000000,31.750000,-12.000000);
 
 # Numero de pontos da tabela
 n.tab <- 4;
@@ -28,10 +28,10 @@ n.tab <- 4;
 n.int <- 2;
 
 # Numero de trapezios
-n.tpz <- 83
+n.tpz <- 47
 
 # Titulo
-titulo <- 'P(x) = 0.704432*x^0 + 0.316076*x^1 + 0.472989*x^2 + 0.280771*x^3'
+titulo <- 'P(x) = -56.750000*x^0 + 62.000000*x^1 + 31.750000*x^2 + -12.000000*x^3'
 
 #
 # Esta parte do script deve funcionar desde que os parametros

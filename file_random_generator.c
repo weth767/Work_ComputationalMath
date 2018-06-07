@@ -2,6 +2,21 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
+double polynomial_horner(int*coefficients, int bigger_expoent, double x){
+	/*variavel y que receberá o valor final da imagem do polinomio segundo o x substituido*/
+	double y = 0;
+	/*recebe o ultimo coefiente*/
+	y = coefficients[bigger_expoent - 1];
+	/*laço de repetição que executa até o valor do menor expoente*/
+	for(int i = bigger_expoent - 2 ; i >= 0; i--){
+		/*o valor de y, será atualizado com os valores dos coeficientes multiplicado por x*/
+		y = y * x + coefficients[i];
+	}
+	/*como saída, espera-se o valor da imagem correto referente a função e o 'x' recebido*/
+	return y;
+}
+
 /*função para a troca dos valores*/
 void swap(double *x, double *y){
 	double temp = *x;
@@ -45,8 +60,16 @@ int main(int argc, char *argv[]){
             double value;
             /*seta a semente para os números pseudo aleatórios*/
             srand(time(NULL));
+            /*tamanho da função original*/
+            int size_function = rand() % 6 + 1;
+            /*vetor dos coeficientes*/
+            int coefficients[size_function];
+            /*preenche esse vetor com coeficientes aleatorios*/
+            for(int i = 0; i < size_function; i++){
+                coefficients[i] = rand() % 10 + 1;
+            }
             /*primeiro valor, número de pontos tabelados para x e y*/
-            int amount_tab_points = rand() % 10 + 1;
+            int amount_tab_points = rand() % 6 + 2;
             /*vetor de pontos de x*/
             double xtab_points[amount_tab_points];
             /*vetor de pontos de y*/
@@ -65,7 +88,7 @@ int main(int argc, char *argv[]){
             /*pontos de x*/
             while(counter != amount_tab_points){
                 /*gera o número pseudo aleatório*/
-                value = (double)(rand() % 10) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
+                value = (double)(rand() % 10) / (rand() % 5 + 1) * (rand() % 2 - rand() % 2);
                 if(value != 0){
                     /*verifica se é diferente de 0, se for*/
                     /*salva no vetor e incrementa o contador*/
@@ -75,26 +98,16 @@ int main(int argc, char *argv[]){
             }
             /*ordena o vetor*/
             selectionsort(xtab_points,amount_tab_points);
-            /*pontos de y*/
-            /*zera novamente o contador*/
-            counter = 0;
-            while(counter != amount_tab_points){
-                /*gera o número pseudo aleatório*/
-                value = (double)(rand() % 10) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
-                if(value != 0){
-                    /*verifica se é diferente de 0, se for*/
-                    /*salva no vetor e incrementa o contador*/
-                    ytab_points[counter] = value;
-                    counter++;
-                }
+            /*preencher os valores de y*/
+            for(int j = 0; j < amount_tab_points; j++){
+                /*for para aplicar o horner na e resolver os valores de x segundo os coeficientes*/
+                ytab_points[j] = polynomial_horner((int*)coefficients,size_function,xtab_points[j]); 
             }
-            /*ordena o vetor*/
-            selectionsort(ytab_points,amount_tab_points);
             /*gera os valores dos intervalos de integração*/
             while(a == 0 || b == 0 || a == b) {
                 /*enquanto foram iguais ou algum deles igual a 0, continuam gerando novos valores*/
-                a = (double)(rand() % 100 + 1) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
-                b = (double)(rand() % 100 + 1) / (rand() % 10 + 1) * (rand() % 2 - rand() % 2);
+                a = (double)(rand() % 10 + 1) / (rand() % 5 + 1) * (rand() % 2 - rand() % 2);
+                b = (double)(rand() % 10 + 1) / (rand() % 5 + 1) * (rand() % 2 - rand() % 2);
             }
             /*verifica se o a é maior que o b*/
             if(a > b){
@@ -108,7 +121,7 @@ int main(int argc, char *argv[]){
             counter = 0;
             while(counter != amount_interpolation_points){
                 /*gera o número pseudo aleatório*/
-                value = (double)(rand() % 1000) / (rand() % 100 + 1) * (rand() % 2 - rand() % 2);
+                value = (double)(rand() % 10) / (rand() % 5 + 1) * (rand() % 2 - rand() % 2);
                 if(value != 0 && (value >= a && value <= b)){
                     /*verifica se é diferente de 0 e se o valor está entre o intervalo a - b, se for*/
                     /*salva no vetor e incrementa o contador*/
@@ -121,6 +134,15 @@ int main(int argc, char *argv[]){
             /*e salva no arquivo*/
             fprintf(file,"#Lista de pontos tabelados [%lf,%lf]\n",xtab_points[0],xtab_points[amount_tab_points - 1]);
             fprintf(file,"n %i\n",amount_tab_points);
+            fprintf(file,"# Função original: ");
+            for(int i = size_function - 1; i >= 0; i--){
+                if(i == 0){
+                    fprintf(file,"%i\n",coefficients[i]);
+                }
+                else{
+                    fprintf(file,"%i*x^%i + ",coefficients[i],i);
+                }
+            }
             fprintf(file,"x ");
             for(int i = 0; i < amount_tab_points; i++){
                 if(i == amount_tab_points - 1){

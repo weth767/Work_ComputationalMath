@@ -1,12 +1,13 @@
-#Lista de pontos tabelados [-1.250000,1.200000]
+#Lista de pontos tabelados [-4.500000,1.500000]
 n 4
-x -1.250000 -0.888889 0.600000 1.200000
-y 0.500000 0.600000 1.125000 2.250000
-# Intervalo da integral definida em [-1.800000,1.250000]
-a -1.800000
-b 1.250000
+# Função original: 5*x^4 + 7*x^3 + 1*x^2 + 8*x^1 + 4
+x -4.500000 -1.800000 1.000000 1.500000
+y 1400.687500 4.504000 25.000000 67.187500
+# Intervalo da integral definida em [-1.000000,2.666667]
+a -1.000000
+b 2.666667
 # Lista de pontos a interpolar
 i 2
-p -1.052632 0.866667
-# Computar integral com 83 trapezios
-t 83
+p -1.000000 0.250000
+# Computar integral com 47 trapezios
+t 47

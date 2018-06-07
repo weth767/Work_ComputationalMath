@@ -1,12 +1,13 @@
-#Lista de pontos tabelados [-2.000000,4.000000]
+#Lista de pontos tabelados [-4.000000,3.000000]
 n 6
-x -2.000000 -0.666667 -0.625000 0.800000 1.000000 4.000000
-y -1.166667 -1.000000 0.222222 0.222222 0.285714 1.333333
-# Intervalo da integral definida em [0.700000,5.000000]
-a 0.700000
+# Função original: 7*x^1 + 8
+x -4.000000 -2.500000 -0.666667 -0.500000 1.000000 3.000000
+y -20.000000 -9.500000 3.333333 4.500000 15.000000 29.000000
+# Intervalo da integral definida em [-1.500000,5.000000]
+a -1.500000
 b 5.000000
 # Lista de pontos a interpolar
-i 3
-p 0.831325 2.531250 3.913580
-# Computar integral com 61 trapezios
-t 61
+i 6
+p -1.500000 -1.250000 0.500000 1.250000 2.000000 2.333333
+# Computar integral com 6 trapezios
+t 6
